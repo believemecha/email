@@ -80,4 +80,5 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  url: 'postgres://lbmsdb_user:93nS9gi9Z3UgrKiMVBQOMzNGkaAFsMoo@dpg-cp5khr0cmk4c73f3rs9g-a.oregon-postgres.render.com/lbmsdb'
+
