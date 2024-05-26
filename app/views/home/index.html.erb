@@ -1,0 +1,89 @@
+<style>
+ .pagination a, .pagination span.current, .pagination span.gap {
+    float: left;
+    padding: 0 14px;
+    line-height: 38px;
+    text-decoration: none;
+    background-color: white;
+    border: 1px solid #DDD;
+    border-left-width: 0;
+}
+
+.pagination {
+    border-left: 1px solid #ddd;
+    .first{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .prev {
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .page{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .next{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .last{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+}
+
+</style>
+
+<div class="container mt-4">
+  <div class="row align-items-center mb-4">
+    <div class="col">
+      <h2 class="text-lg font-semibold text-gray-800">OTP List</h2>
+    </div>
+    <div class="col-auto">
+      <form class="form-inline" id="cardNumberFilterForm">
+        <label for="card_number" class="mr-2">Filter by Card Number:</label>
+        <select name="card_number" id="card_number" class="form-control">
+          <option value="">Select Card Number</option>
+          <% @card_numbers.each do |card_number| %>
+            <option value="<%= card_number %>" <%= params[:card_number].to_s == card_number.to_s ? 'selected' : '' %>>
+              <%= card_number %>
+            </option>
+          <% end %>
+        </select>
+        <button type="submit" class="btn btn-primary ml-2">Search</button>
+      </form>
+    </div>
+  </div>
+  
+  <div class="row">
+    <% @otps.each do |record| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Card Number: <%= record.card_number %></h5>
+            <p class="card-text text-success">OTP: <%= record.otp %></p>
+            <p class="card-text text-info">To: <%= record.to_address %></p>
+            <p class="card-text">From: <%= record.from_address %></p>
+            <p class="card-text text-dark">Subject: <%= record.subject %></p>
+            <p class="card-text">Received Time: <%= record.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+            <p class="card-text text-primary">Summary: <%= record.summary %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+    <%if !@otps.present?%>
+        <h3 class="text-warning text-center" style="font-size: 30px;">No Otp's Available. Try Changing Filter</h3>
+    <%end%>
+<div class="row w-100">
+       <%= paginate @otps %>
+</div>
+
+</div>
